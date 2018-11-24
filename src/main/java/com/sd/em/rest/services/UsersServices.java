@@ -5,7 +5,7 @@ package com.sd.em.rest.services;
 
 import java.util.List;
 
-import com.sd.em.rest.domain.Users;
+import com.sd.em.rest.domain.User;
 
 
 /**
@@ -14,14 +14,16 @@ import com.sd.em.rest.domain.Users;
  */
 public interface UsersServices {
 	
-	List<Users> findAll();
+	List<User> findAll();
 	
-	Users findByUsername(String username);
+	User findByUsername(String username);
 	
-	Users findByUserid(int userid);
+	User findByUserid(int userid);
 	
-	Users findByEmail(String email);
+	User findByEmail(String email);
 	
-	Users save(Users user);
+	User save(User user);
+	
+	void delete(List<User> userList);
 
 }

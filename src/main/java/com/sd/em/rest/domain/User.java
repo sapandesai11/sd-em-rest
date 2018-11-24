@@ -4,15 +4,24 @@
 package com.sd.em.rest.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 
 /**
@@ -21,19 +30,25 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="users")
-public class Users implements Serializable{
+@ApiModel(description="User related details.")
+public class User implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	@Column(name="id")
 	private int userid;
 	
-	@Column(name="username", nullable=false)
+	@Column(name="username", nullable=false, unique=true)
+	@Size(min=3, max=50, message="User name must contain minimum 3 and maximum 50 charecters.")
+	@ApiModelProperty("User name must contain minimum 3 and maximum 50 charecters.")
 	private String username;
 	
 	@Column(name="password", nullable = false)
+	@Size(min=8, message="Password must contain atleast 8 charecters.")
+	@ApiModelProperty("Password must contain atleast 8 charecters.")
+	@JsonIgnore
 	private String password;
 	
 	@Column(name="firstname")
@@ -45,9 +60,12 @@ public class Users implements Serializable{
 	@Column(name="email")
 	private String email;
 	
-	@ManyToOne()
-	@JoinColumn(name="role_id")
-	private Roles role;
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(	name="users_roles", 
+				joinColumns = {@JoinColumn(name = "user_id")},
+				inverseJoinColumns = {@JoinColumn(name="role_id")})
+	@JsonIgnore
+	private Set<Roles> role;
 
 	/**
 	 * @return the userid
@@ -133,17 +151,19 @@ public class Users implements Serializable{
 		this.email = email;
 	}
 
+	
+
 	/**
 	 * @return the role
 	 */
-	public Roles getRole() {
+	public Set<Roles> getRole() {
 		return role;
 	}
 
 	/**
 	 * @param role the role to set
 	 */
-	public void setRole(Roles role) {
+	public void setRole(Set<Roles> role) {
 		this.role = role;
 	}
 
@@ -152,7 +172,7 @@ public class Users implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		return "Users [userid=" + userid + ", username=" + username + ", password=" + password + ", firstName="
+		return "User [userid=" + userid + ", username=" + username + ", password=" + password + ", firstName="
 				+ firstName + ", lastName=" + lastName + ", email=" + email + ", role=" + role + ", getUserid()="
 				+ getUserid() + ", getUsername()=" + getUsername() + ", getPassword()=" + getPassword()
 				+ ", getFirstName()=" + getFirstName() + ", getLastName()=" + getLastName() + ", getEmail()="

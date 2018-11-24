@@ -52,7 +52,7 @@ public class TransactionsServiceImplTest {
 	
 	Categories category;
 	
-	Users user;*/
+	User user;*/
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -61,7 +61,7 @@ public class TransactionsServiceImplTest {
 		transaction = new Transactions();
 		/*currency = new Currency();
 		category = new Categories();
-		user = new Users();*/
+		user = new User();*/
 		transaction.setAmount(100);
 		transaction.setCategory(categoriesServices.findByAll().get(0));
 		transaction.setCurrency(currenciesServices.findAll().get(0));

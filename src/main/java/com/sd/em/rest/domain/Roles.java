@@ -23,13 +23,20 @@ public class Roles implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	@Column(name="role_id")
 	private int roleId;
 	
 	@Column(name="role_name")
 	private String roleName;
 
+	public Roles() {}
+	
+	public Roles(int roleId, String roleName) {
+		this.roleId = roleId;
+		this.roleName = roleName;
+	}
+	
 	/**
 	 * @return the roleId
 	 */

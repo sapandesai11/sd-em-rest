@@ -46,7 +46,7 @@ public class Transactions implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name="id")
-	private Users owner;
+	private User owner;
 
 	/**
 	 * @return the id
@@ -121,14 +121,14 @@ public class Transactions implements Serializable{
 	/**
 	 * @return the owner
 	 */
-	public Users getOwner() {
+	public User getOwner() {
 		return owner;
 	}
 
 	/**
 	 * @param owner the owner to set
 	 */
-	public void setOwner(Users owner) {
+	public void setOwner(User owner) {
 		this.owner = owner;
 	}
 

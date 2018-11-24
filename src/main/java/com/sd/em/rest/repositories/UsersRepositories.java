@@ -8,24 +8,24 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.sd.em.rest.domain.Users;
+import com.sd.em.rest.domain.User;
 
 /**
  * @author PC Doctor.com
  *
  */
 @Repository
-public interface UsersRepositories extends CrudRepository<Users, Integer> {
+public interface UsersRepositories extends CrudRepository<User, Integer> {
 	
-	List<Users> findAll();
+	List<User> findAll();
 	
-	Users findByUsername(String username);
+	User findByUsername(String username);
 	
-	Users findByUserid(int userid);
+	User findByUserid(int userid);
 	
-	Users findByEmail(String email);
+	User findByEmail(String email);
 	
 	@SuppressWarnings("unchecked")
-	Users save(Users user);
+	User save(User user);
 
 }
